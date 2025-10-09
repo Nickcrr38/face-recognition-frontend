@@ -15,12 +15,15 @@ const { handleProxyImage } = require('./controllers/proxyImage');
 const db = knex({
   client: 'pg',
   connection: {
-    host: '127.0.0.1',
+    host: process.env.DB_HOST, // now uses hosted DB
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
   }
 });
+
+
+
 
 const app = express();
 app.use(cors());
