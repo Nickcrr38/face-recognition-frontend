@@ -1,0 +1,98 @@
+/* Shared wrapper for vertical stack */
+.signin-wrapper,
+.register-wrapper {
+  display: flex;
+  flex-direction: column;      /* stack welcome text above form */
+  justify-content: flex-start;  /* keep content at the top */
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 50px;           /* fixed space from top */
+  box-sizing: border-box;       /* include padding in height */
+  text-align: center;
+  background: transparent;      /* optional */
+}
+
+/* Welcome text */
+.welcome-text {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 30px;
+  color: rgb(0, 0, 0);
+  line-height: 1.4;
+  max-width: 90%;
+  white-space: nowrap;       /* prevent text from wrapping */
+  overflow: hidden;          /* hide any overflow */
+  text-overflow: ellipsis;   /* optional: shows ... if text overflows */
+}
+
+
+
+
+/* Form boxes */
+.signin-box,
+.register-form {
+  background: rgba(0,0,0,0.7);
+  padding: 40px;
+  border-radius: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(248, 247, 247);
+}
+
+/* Buttons do not trigger default submit */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  width: 100%;
+}
+
+/* Input fields */
+input {
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+/* Login / Register link */
+.login-link span {
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.login-link span:hover {
+  color: #a51111;
+}
+
+/* --- Sign In & Register Buttons --- */
+
+/* Sign In button */
+.signin-box button {
+  background-color: #1caf1e; /* blue */
+  color: rgb(255, 255, 255);
+}
+
+/* Sign In hover */
+.signin-box button:hover {
+  background-color: #0d7acc; /* darker blue */
+}
+
+/* Register button */
+.register-form button {
+  background-color: #149df2; /* match Sign In button */
+  color: rgb(255, 250, 250);
+}
+
+/* Register hover */
+.register-form button:hover {
+  background-color: #0d7acc; /* match hover effect */
+}
+
+

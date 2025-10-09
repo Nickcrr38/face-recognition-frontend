@@ -1,0 +1,19 @@
+.register-form button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #1caf1e; /* green */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.25s ease; /* smooth hover animation */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3); /* subtle shadow */
+}
+
+.register-form button:hover {
+  background-color: #0d7acc;; /* red hover */
+  transform: scale(1.05); /* slight grow */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* deeper shadow */
+}

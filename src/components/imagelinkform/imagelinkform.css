@@ -1,0 +1,74 @@
+/* Upload form */
+.image-upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  text-align: center;
+  padding: 0 10px; /* small padding for mobile */
+}
+
+.instruction {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column; /* stack upload vertically */
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 250px; /* keeps button from being too wide */
+}
+
+.upload-btn {
+  width: 100%; /* full width within container */
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  border-color: #149df2;
+  box-shadow: 0 0 5px rgba(20, 157, 242, 0.5);
+}
+
+/* Face recognition */
+.facerecognition-wrapper {
+  text-align: center;
+  margin-top: 1rem;
+  padding: 0 10px;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  max-width: 100%; /* responsive */
+}
+
+.image-container img {
+  width: 100%; /* scales image to container */
+  max-width: 500px; /* optional limit */
+  height: auto;
+  border-radius: 6px;
+}
+
+/* Bounding boxes scale with image */
+.bounding-box {
+  position: absolute;
+  border: 3px solid #00ff00;
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+/* Optional: small screens */
+@media (max-width: 400px) {
+  .instruction {
+    font-size: 14px;
+  }
+}
+
