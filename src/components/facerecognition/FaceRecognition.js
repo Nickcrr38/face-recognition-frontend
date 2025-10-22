@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import * as faceapi from '@vladmandic/face-api';
 import './facerecognition.css';
 
+
 const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
   const imgRef = useRef();
   const [modelsLoaded, setModelsLoaded] = useState(false);
