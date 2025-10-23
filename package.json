@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@tensorflow/tfjs": "4.22.0",
-    "@tensorflow/tfjs-backend-wasm": "4.22.0",
     "@vladmandic/face-api": "1.7.12",
     "ajv": "^8.17.1",
     "particles-bg": "2.5.5",
