@@ -1,7 +1,7 @@
 import './facerecognition.css';
 
 // Set WASM path at module level - BEFORE component
-setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
+// setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 
 const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
   const imgRef = useRef();
@@ -17,25 +17,10 @@ const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
         
         // REMOVE setWasmPaths from here - it's now at the top
             
-        // Try backends in order: wasm, webgl, cpu
-        const backends = ['wasm', 'webgl', 'cpu'];
-        let success = false;
-        
-        for (const backend of backends) {
-          try {
-            await tf.setBackend(backend);
-            await tf.ready();
-            console.log(`✅ TensorFlow initialized with ${backend} backend`);
-            success = true;
-            break;
-          } catch (err) {
-            console.log(`❌ ${backend} backend failed:`, err.message);
-          }
-        }
-        
-        if (!success) {
-          throw new Error('No TensorFlow backend available');
-        }
+     // Use CPU backend (most reliable for production)
+        await tf.setBackend('cpu');
+        await tf.ready();
+        console.log(`✅ TensorFlow initialized with CPU backend`);
         
         setTfReady(true);
         setStatus('TensorFlow ready');
