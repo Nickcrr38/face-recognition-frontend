@@ -1,23 +1,74 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import * as faceapi from '@vladmandic/face-api';
+import * as tf from '@tensorflow/tfjs';
+import { setWasmPaths } from '@tensorflow/tfjs-backend-wasm';
 import './facerecognition.css';
-
 
 const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
   const imgRef = useRef();
   const [modelsLoaded, setModelsLoaded] = useState(false);
-  const [detecting, setDetecting] = useState(false); // overlay
+  const [detecting, setDetecting] = useState(false);
+  const [tfReady, setTfReady] = useState(false);
 
-  // Load SSD model once
+  // Initialize TensorFlow FIRST
   useEffect(() => {
-    const loadModels = async () => {
-      setStatus('Loading model...');
-      await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
-      setModelsLoaded(true);
-      setStatus('Model loaded');
+    const initTensorFlow = async () => {
+      try {
+        setStatus('Initializing TensorFlow...');
+        
+        // Set WASM path
+                setWasmPaths('/');
+
+        
+        // Try backends in order: wasm, webgl, cpu
+        const backends = ['wasm', 'webgl', 'cpu'];
+        let success = false;
+        
+        for (const backend of backends) {
+          try {
+            await tf.setBackend(backend);
+            await tf.ready();
+            console.log(`✅ TensorFlow initialized with ${backend} backend`);
+            success = true;
+            break;
+          } catch (err) {
+            console.log(`❌ ${backend} backend failed:`, err.message);
+          }
+        }
+        
+        if (!success) {
+          throw new Error('No TensorFlow backend available');
+        }
+        
+        setTfReady(true);
+        setStatus('TensorFlow ready');
+      } catch (err) {
+        console.error('TensorFlow initialization failed:', err);
+        setStatus('TensorFlow initialization failed');
+      }
     };
-    loadModels();
+    
+    initTensorFlow();
   }, [setStatus]);
+
+  // Load face-api models AFTER TensorFlow is ready
+  useEffect(() => {
+    if (!tfReady) return;
+    
+    const loadModels = async () => {
+      try {
+        setStatus('Loading face detection model...');
+        await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
+        setModelsLoaded(true);
+        setStatus('Model loaded - ready to detect faces!');
+      } catch (err) {
+        console.error('Model loading failed:', err);
+        setStatus('Failed to load model');
+      }
+    };
+    
+    loadModels();
+  }, [tfReady, setStatus]);
 
   // Scale boxes to displayed image size
   const scaleBoxesToDisplaySize = useCallback((detections, img) => {
@@ -41,7 +92,7 @@ const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
 
   // Run detection after image load
   const handleImageLoad = async () => {
-    if (!imgRef.current || !modelsLoaded) return;
+    if (!imgRef.current || !modelsLoaded || !tfReady) return;
     const img = imgRef.current;
     if (!img.naturalWidth || !img.naturalHeight) return;
 
@@ -64,7 +115,7 @@ const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
       }
     } catch (err) {
       console.error('Face detection error:', err);
-      setStatus('Error detecting faces');
+      setStatus('Error detecting faces: ' + err.message);
     } finally {
       setDetecting(false);
     }
