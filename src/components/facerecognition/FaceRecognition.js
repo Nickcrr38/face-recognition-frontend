@@ -1,7 +1,7 @@
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import * as faceapi from '@vladmandic/face-api';
+import * as tf from '@tensorflow/tfjs';
 import './facerecognition.css';
-
-// Set WASM path at module level - BEFORE component
-// setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 
 const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
   const imgRef = useRef();
@@ -15,9 +15,7 @@ const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
       try {
         setStatus('Initializing TensorFlow...');
         
-        // REMOVE setWasmPaths from here - it's now at the top
-            
-     // Use CPU backend (most reliable for production)
+        // Use CPU backend (most reliable for production)
         await tf.setBackend('cpu');
         await tf.ready();
         console.log(`✅ TensorFlow initialized with CPU backend`);
@@ -140,7 +138,6 @@ const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
 };
 
 export default FaceRecognition;
-
 
 
 
