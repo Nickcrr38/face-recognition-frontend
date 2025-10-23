@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
-import * as faceapi from '@vladmandic/face-api';
-import * as tf from '@tensorflow/tfjs';
-import { setWasmPaths } from '@tensorflow/tfjs-backend-wasm';
 import './facerecognition.css';
+
+// Set WASM path at module level - BEFORE component
+setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 
 const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
   const imgRef = useRef();
@@ -16,10 +15,8 @@ const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
       try {
         setStatus('Initializing TensorFlow...');
         
-        // Set WASM path
-setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
-
-        
+        // REMOVE setWasmPaths from here - it's now at the top
+            
         // Try backends in order: wasm, webgl, cpu
         const backends = ['wasm', 'webgl', 'cpu'];
         let success = false;
