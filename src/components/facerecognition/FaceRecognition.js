@@ -17,7 +17,7 @@ const FaceRecognition = ({ imageSrc, boxes, setBoxes, setStatus }) => {
         setStatus('Initializing TensorFlow...');
         
         // Set WASM path
-setWasmPaths(process.env.PUBLIC_URL + '/');
+setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 
         
         // Try backends in order: wasm, webgl, cpu
